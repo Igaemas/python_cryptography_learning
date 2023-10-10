@@ -1,3 +1,7 @@
 # python_cryptography_learning
 
-ROT13 : done
+## To-Do :
+- Base64
+
+## Done :
+- Rot13

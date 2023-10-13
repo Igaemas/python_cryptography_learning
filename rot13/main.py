@@ -11,7 +11,7 @@ for arg in sys.argv :
     else:
         message = arg
 
-# list of caracter
+# list of character
 min_letter = "abcdefghijklmnopqrstuvwxyz"
 max_letter = min_letter.upper()
 number = "0123456789"
@@ -20,28 +20,24 @@ number = "0123456789"
 new_message_list = []
 new_message = ""
 
-# function
-def rot13(message, key):
+def rot13(character, key, list_of_character):
+    position = list_of_character.find(character)
+    new_position = (position + key) % len(list_of_character)
+    new_character = list_of_character[new_position]
+    new_message_list.append(new_character)
+
+def main(message, key):
     message_list = list(message)
-    for caracter in message_list:
-        if caracter in number:
-            position = number.find(caracter)
-            new_position = (position + key) % 10
-            new_caracter = number[new_position]
-            new_message_list.append(new_caracter)
-        if caracter.islower():
-            position = min_letter.find(caracter)
-            new_position = (position + key) % 26
-            new_caracter = min_letter[new_position]
-            new_message_list.append(new_caracter)
-        if caracter.isupper():
-            position = max_letter.find(caracter) % 26
-            new_position = position + key
-            new_caracter = max_letter[new_position]
-            new_message_list.append(new_caracter)
-        if caracter == " ":
+    for character in message_list:
+        if character in number:
+            rot13(character, key, number)
+        if character.islower():
+            rot13(character, key, min_letter)
+        if character.isupper():
+            rot13(character, key, max_letter)
+        if character == " ":
             new_message_list.append(" ")
     message_list = "".join(new_message_list)
-    print(message_list)
+    return(message_list)
 
-rot13(message, rotation_key)
+print(main(message, rotation_key))

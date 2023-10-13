@@ -6,7 +6,6 @@ import sys
 
 base64_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 message = "hello"
-test = "aGVsbG8"
 crypted_message_list = []
 binary_message_list = []
 message_list = []

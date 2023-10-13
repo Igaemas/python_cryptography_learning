@@ -11,22 +11,19 @@ max_letter = min_letter.upper()
 number = "0123456789"
 
 # function
-def rot13(character, key):
+def rot13(character, key, list_of_character):
+    position = list_of_character.find(character)
+    new_position = (position + key) % len(list_of_character)
+    new_character = list_of_character[new_position]
+    return new_character
+
+def rot13_selection(character, key):
     if character in number:
-        position = number.find(character)
-        new_position = (position + key) % 10
-        new_character = number[new_position]
-        return new_character
+        return rot13(character, key, number)
     elif character.islower():
-        position = min_letter.find(character)
-        new_position = (position + key) % 26
-        new_character = min_letter[new_position]
-        return new_character
+        return rot13(character, key, min_letter)
     elif character.isupper():
-        position = max_letter.find(character) % 26
-        new_position = position + key
-        new_character = max_letter[new_position]
-        return new_character
+        return rot13()
     elif character == " ":
             return " "
 
@@ -39,9 +36,9 @@ def vigenere(message, key, type):
             if i < len(message_in_group_of_k_bloc[bloc-1]):
                 character_to_rot = (message_in_group_of_k_bloc[bloc-1])[int(i)]
                 if type == "code":
-                    vigenered_message_list.append(rot13(character_to_rot, +int(rotation_key)))
+                    vigenered_message_list.append(rot13_selection(character_to_rot, +int(rotation_key)))
                 elif type == "decode":
-                    vigenered_message_list.append(rot13(character_to_rot, -int(rotation_key)))
+                    vigenered_message_list.append(rot13_selection(character_to_rot, -int(rotation_key)))
                 i += 1
     vigenered_message = "".join(vigenered_message_list)
     return vigenered_message
@@ -50,7 +47,7 @@ for arg in sys.argv :
     if "key:" in arg:
         key = (arg.split("key:"))[1]
     if "-h" == arg:
-        print("key:<number> : your key for rotation (default : 13)\n-h : to display this message\n\nexemple : python3 main.py key:15 'test'")
+        print("key:<number> : your key for rotation (default : 13)\n-e : encode\n-d : decode\n-h : to display this message\n\nexemple : python3 main.py -e key:151 'test'\nexemple : python3 main.py -d key:151 'toij'")
         exit()
     if "-e" in arg:
         vigenere_type = "code"
